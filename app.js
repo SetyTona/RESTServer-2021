@@ -14,8 +14,8 @@ const app = express();
 const port = process.env.port;
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/404NotFound.html')
-        //res.send("HOLA MUNDO")
+    // res.sendFile(__dirname + '/public/404NotFound.html')
+    res.send("HOLA MUNDO")
 })
 
 app.listen(port, () => {
