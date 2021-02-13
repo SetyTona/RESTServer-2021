@@ -11,11 +11,11 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 
-const port = process.env.port;
+const port = process.env.PORT; // utilizamos la variable de entorno, llamada PORT 
 
-app.get('/', (req, res) => {
-    // res.sendFile(__dirname + '/public/404NotFound.html')
-    res.send("HOLA MUNDO")
+// Si ponen una ruta que no existe, lo redirigimos
+app.get('*', (req, res) => {
+    res.sendFile(__dirname + "/public/404NotFound.html")
 })
 
 app.listen(port, () => {
