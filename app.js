@@ -11,7 +11,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 
-port = process.env.port;
+const port = process.env.port;
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/404NotFound.html')
