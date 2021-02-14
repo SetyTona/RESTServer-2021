@@ -17,7 +17,7 @@ class Server {
     // Middlewares (son funciones que añaden funcionalidad a la web)
     middlewares() {
 
-        // this.app.use(cors()); // Middleware para proteger el backend e indicarle que origenes podrán hacernos peticiones
+        this.app.use(cors()); // Middleware para proteger el backend e indicarle que origenes podrán hacernos peticiones
 
         // .use -> Es la palabra clave que me indica que es un middleware
         this.app.use(express.static('public')); // dónde public es la carpeta que servirá estatica que servirá los ficheros (Directorio a publicar)
