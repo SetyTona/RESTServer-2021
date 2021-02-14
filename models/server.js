@@ -5,7 +5,12 @@ class Server {
     constructor() {
 
         this.app = express();
+
+        // OJO !!!! Es muy importante que la palabra PORT, vaya en mayúsculas !!! Sino en producción (en heroku), se cuelga (aunque en pruebas va bien)
         this.port = process.env.PORT;
+
+        // Definiriamos aquí, mediante propiedades, las rutas de la API, según su naturaleza    
+        this.APIPathUsuarios = '/api/usuarios' // Por ejemplo, la API de CRUD de usuario
 
         // Middlewares
         this.middlewares();
@@ -17,7 +22,7 @@ class Server {
     // Middlewares (son funciones que añaden funcionalidad a la web)
     middlewares() {
 
-        this.app.use(cors()); // Middleware para proteger el backend e indicarle que origenes podrán hacernos peticiones
+        this.app.use(cors()); // Middleware para proteger el backend e indicarle que origenes podrán hacernos peticiones (SIEMPRE es bueno configurarlo e instalarlo)
 
         // .use -> Es la palabra clave que me indica que es un middleware
         this.app.use(express.static('public')); // dónde public es la carpeta que servirá estatica que servirá los ficheros (Directorio a publicar)
@@ -27,26 +32,9 @@ class Server {
     // definición del mapa de rutas    
     routes() {
 
-        // GET - Se usa normalmente para obtener datos
-        this.app.get('/api', (req, res) => {
-            res.status(200).json({ msg: "get API" })
-        })
+        // Colocamos un Middleware que hará que cuando soliciten esta ruta con usuarios, lance una llamada al fichero correspondiente (situado en el require)
+        this.app.use(this.APIPathUsuarios, require('../routes/users'));
 
-        // PUT - Se usa normalmente para modificar datos
-        this.app.put('/api', (req, res) => {
-            res.status(202).json({ msg: "put API" })
-        })
-
-        // POST - Se usa normalmente para crear nuevos registros
-        this.app.post('/api', (req, res) => {
-            res.status(201).json({ msg: "post API" })
-        })
-
-        // DELETE - Se usa normalmente para borrar datos (no necesariamente significa una eliminación física de la BBDD, 
-        //          también puede ser un centinela que indica que está inactivo)
-        this.app.delete('/api', (req, res) => {
-            res.status(200).json({ msg: "delete API" })
-        })
 
         // Para devolver una página web, si no envían una petición correcta
         // Explicación de cómo utilizar el dirname, etc: 
@@ -54,6 +42,7 @@ class Server {
         this.app.get('*', (req, res) => {
             res.sendFile(process.cwd() + '/public/404NotFound.html')
         })
+
 
     }
 
