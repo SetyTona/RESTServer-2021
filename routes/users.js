@@ -30,7 +30,11 @@ router.post('/', usuariosPOST)
 //       Se usa normalmente para obtener datos.
 //       Fijemonos que no estamos ejecutando la función. Eso se haría con esto: usuariosGET(), 
 //       sino que estamos enviando la referencia a la misma, con: usuariosGET
-router.put('/', usuariosPUT)
+//       Al poner el :id, le indico a la ruta, que puede venir un parametro adicional y este, 
+//       quiero que me lo sirva como el parametro: id. Por lo tanto, lo destructuraré en el fichero controlador
+//       La llamada: http://localhost:3031/api/usuarios/13
+//       Tendría como id = 13
+router.put('/:id', usuariosPUT)
 
 // PATCH  
 //       Se usa normalmente para obtener datos.
